@@ -2,7 +2,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, GitCompareArrows, TrendingUp,
   ShoppingBag, AlertTriangle, Activity, RefreshCw,
-  Bell, Download, Clock, Search
+  Bell, Download, Clock, Search, LogOut
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { generateAlerts } from '../data/dataUtils';
@@ -28,7 +28,7 @@ export default function Layout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const page = pageTitles[location.pathname] || pageTitles['/'];
-  const { isRefreshing, refresh, lastRefreshed, dateRange, setDateRange, currentTime } = useApp();
+  const { isRefreshing, refresh, lastRefreshed, dateRange, setDateRange, currentTime, logout } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
 
   const alerts = useMemo(() => generateAlerts(), []);
@@ -140,6 +140,15 @@ export default function Layout({ children }) {
               {totalAlertCount > 0 && (
                 <span className="icon-button-badge">{totalAlertCount}</span>
               )}
+            </button>
+
+            {/* Logout Button */}
+            <button
+              className="icon-button"
+              onClick={logout}
+              title="Logout"
+            >
+              <LogOut size={18} />
             </button>
 
             {/* Refresh Button */}
